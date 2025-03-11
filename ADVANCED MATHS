@@ -1,0 +1,152 @@
+1.Prime Factors
+
+
+class Solution {
+    public static int[] AllPrimeFactors(int N) {
+        List<Integer> primeFactors = new ArrayList<>();
+    
+        if (N % 2 == 0) {
+            primeFactors.add(2);
+            while (N % 2 == 0) {
+                N /= 2;
+            }
+        }
+        for (int i = 3; i * i <= N; i += 2) {
+            if (N % i == 0) {
+                primeFactors.add(i);
+                while (N % i == 0) {
+                    N /= i;
+                }
+            }
+        }
+        if (N > 2) {
+            primeFactors.add(N);
+        }
+
+
+        int[] result = new int[primeFactors.size()];
+        for (int i = 0; i < primeFactors.size(); i++) {
+            result[i] = primeFactors.get(i);
+        }
+
+        return result;
+    }
+}
+
+2.All divisors of a Number
+
+class Solution {
+
+    public void print_divisors(int N) {
+    
+        List<Integer> smallDivisors = new ArrayList<>();
+
+        List<Integer> largeDivisors = new ArrayList<>();
+        
+
+        for (int i = 1; i * i <= N; i++) {
+            if (N % i == 0) {
+                smallDivisors.add(i); 
+                if (i != N / i) { 
+                    largeDivisors.add(N / i); 
+                }
+            }
+        }
+        for (int i = 0; i < smallDivisors.size(); i++) {
+            System.out.print(smallDivisors.get(i) + " ");
+        }
+        
+        for (int i = largeDivisors.size() - 1; i >= 0; i--) {
+            System.out.print(largeDivisors.get(i) + " ");
+        }
+    }
+}
+
+3.Count Primes
+
+class Solution {
+    public int countPrimes(int n) {
+        if (n <= 2) {
+            return 0; 
+        }
+        boolean[] isPrime = new boolean[n];
+        for (int i = 2; i < n; i++) {
+            isPrime[i] = true;
+        }
+        for (int i = 2; i * i < n; i++) {
+            if (isPrime[i]) {
+                for (int j = i * i; j < n; j += i) {
+                    isPrime[j] = false;
+                }
+            }
+        }
+        int count = 0;
+        for (int i = 2; i < n; i++) {
+            if (isPrime[i]) {
+                count++;
+            }
+        }
+        return count;
+    }
+}
+class GFG {
+    public static void main(String[] args) {
+        Solution obj = new Solution();
+        System.out.println(obj.countPrimes(10)); 
+        System.out.println(obj.countPrimes(0));  
+        System.out.println(obj.countPrimes(1)); 
+        System.out.println(obj.countPrimes(30)); 
+    }
+}
+
+4.You are given a positive number N. Using the concept of Sieve, compute its prime factorisation.
+
+class Solution {
+   
+    void sieve() {}
+
+    static void mySieve(int[] prime, int n) {
+        for (int i = 1; i <= n; i++) {
+            prime[i] = i;
+        }
+        for (int i = 2; i * i <= n; i++) {
+            if (prime[i] == i) {
+                for (int j = i * i; j <= n; j += i) {
+                    if (prime[j] == j)
+                        prime[j] = i;
+                }
+            }
+        }
+    }
+    static List<Integer> findPrimeFactors(int N) {
+        List<Integer> ans = new ArrayList<>();
+        int[] prime = new int[N + 1];
+        mySieve(prime, N);
+
+        while (N != 1) {
+            ans.add(prime[N]);
+            N = N / prime[N];
+        }
+        return ans;
+    }
+}
+
+5.Pow(x, n)
+class Solution {
+    public double myPow(double x, int n) {
+        long exp = n; 
+        if (exp < 0) {
+            x = 1 / x;
+            exp = -exp;
+        }
+
+        double ans = 1.0;
+        while (exp > 0) {
+            if ((exp & 1) == 1) ans *= x;  
+            x *= x;  
+            exp >>= 1;  
+        }
+
+        return ans;
+    }
+    }
