@@ -1,0 +1,163 @@
+1.Count Digits.
+class Solution {
+    static int evenlyDivides(int n) {
+        String strN = String.valueOf(n);
+        int count = 0;
+        for (int i = 0; i < strN.length(); i++) {
+
+            int digit = strN.charAt(i) - '0';  
+                        if (digit != 0 && n % digit == 0) {
+                count++;
+            }
+        }
+        return count;  
+    }
+}
+
+2.Reverse Integer
+class Solution {
+    public int reverse(int x) {
+        int reversed = 0;
+        while (x != 0) {
+            int digit = x % 10; 
+            x /= 10;
+            if (reversed > Integer.MAX_VALUE / 10 || (reversed == Integer.MAX_VALUE / 10 && digit > Integer.MAX_VALUE % 10)) {
+                return 0; 
+            }
+            if (reversed < Integer.MIN_VALUE / 10 || (reversed == Integer.MIN_VALUE / 10 && digit < Integer.MIN_VALUE % 10)) {
+                return 0;  
+            }
+
+            reversed = reversed * 10 + digit;  
+        }
+        return reversed;
+    }
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        System.out.println(solution.reverse(123));   
+        System.out.println(solution.reverse(-123));  
+        System.out.println(solution.reverse(120));   
+        System.out.println(solution.reverse(0));     
+        System.out.println(solution.reverse(1534236469)); 
+    }
+}
+
+3.Palindrome Number
+class Solution {
+    public boolean isPalindrome(int x) {
+        if (x < 0 || (x % 10 == 0 && x != 0)) {
+            return false;
+        }
+        int reversed = 0;
+        while (x > reversed) {
+            reversed = reversed * 10 + x % 10;  
+            x /= 10;  
+        }
+
+        return x == reversed || x == reversed / 10;
+   
+    }
+}
+
+4.Given two integers a and b, the task is to compute their LCM and GCD and return an array containing their LCM and GCD.
+
+class Solution {
+    public int[] lcmAndGcd(int a, int b) {
+        int gcdValue = gcd(a, b); // Calculate GCD
+        int lcmValue = lcm(a, b); // Calculate LCM
+        return new int[] { lcmValue, gcdValue };
+    }
+
+    public int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+
+    public int lcm(int a, int b) {
+        return (a * b) / gcd(a, b); // Use formula: lcm(a, b) = (a * b) / gcd(a, b)
+    }
+}
+
+//{ Driver Code Starts.
+
+// } Driver Code Ends
+
+5.Sum 1 to n Divisors
+
+
+class Solution {
+    public int sumOfDivisors(int n) {
+        int totalSum = 0;
+        for (int i = 1; i <= n; i++) {
+            totalSum += sumDivisors(i);
+        }
+        return totalSum;
+    }
+
+    public int sumDivisors(int num) {
+        int sum = 0;
+        for (int i = 1; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) {
+                sum += i; 
+                if (i != num / i) {
+                    sum += num / i;  
+                }
+            }
+        }
+        return sum;
+    }
+}
+
+6.Minimum Jumps
+
+
+class Solution {
+    public int minJumps(int[] arr) {
+        int n = arr.length;
+       
+        if (n == 1) {
+            return 0;
+        }
+       
+        if (arr[0] == 0) {
+            return -1;
+        }
+       
+        int jumps = 0;
+        int currentEnd = 0;
+        int farthest = 0;
+       
+        for (int i = 0; i < n; i++) {
+            farthest = Math.max(farthest, i + arr[i]);
+           
+            if (i == currentEnd) {
+                jumps++;
+                currentEnd = farthest;
+               
+                if (currentEnd >= n - 1) {
+                    return jumps;
+                }
+            }
+        }
+       
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        Solution obj = new Solution();
+       
+       
+        int[] arr1 = {1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9};
+        System.out.println(obj.minJumps(arr1));
+       
+        int[] arr2 = {1, 4, 3, 2, 6, 7};
+        System.out.println(obj.minJumps(arr2));
+       
+        int[] arr3 = {0, 10, 20};
+        System.out.println(obj.minJumps(arr3));
+    }
+}
